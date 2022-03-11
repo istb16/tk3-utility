@@ -1,0 +1,11 @@
+{
+  "Information": [
+    "tk3.biz utility api."
+  ],
+  "profile": "",
+  "region": "ap-northeast-1",
+  "configuration": "Release",
+  "s3-prefix": "tk3-utility-api/",
+  "template": "serverless.template",
+  "template-parameters": ""
+}
