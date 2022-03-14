@@ -18,8 +18,8 @@ public class DumpController : BaseController
         ContentType = Request.ContentType,
         Url = $"{Request.Scheme}://{Request.Host}{Request.Path}{Request.QueryString}",
         Query = Request.Query,
-        Headers = Request.Headers.Select(h => new { h.Key, h.Value }),
-        Cookies = Request.Cookies.Select(c => new { c.Key, c.Value }),
+        Headers = Request.Headers.Select(h => new { h.Key, Value = h.Value.FirstOrDefault() }),
+        Cookies = Request.Cookies.Select(c => new { c.Key, Value = c.Value.FirstOrDefault() }),
         Body = await GetBodyStringAsync(),
     };
 
