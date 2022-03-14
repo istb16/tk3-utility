@@ -43,6 +43,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 
-app.MapGet("/", () => "Welcome to running tk3.biz utility.");
+app.MapGet("/", () => $"Welcome to running tk3.biz utility. Builded at {File.GetLastWriteTimeUtc(System.Reflection.Assembly.GetExecutingAssembly().Location)}");
 
 app.Run();
