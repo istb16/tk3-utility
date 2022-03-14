@@ -11,35 +11,16 @@ builder.Services.AddHttpClient();
 
 builder.Services.AddCors(options =>
 {
-    var allowedHosts = builder.Configuration.GetValue(typeof(string), "AllowedHosts") as string;
-    options.AddDefaultPolicy(
-        builder =>
-        {
-            if (allowedHosts == null || allowedHosts == "*")
-            {
-                builder.AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader();
-                return;
-            }
-            string[] hosts;
-            if (allowedHosts.Contains(';')) hosts = allowedHosts.Split(';');
-            else
-            {
-                hosts = new string[1];
-                hosts[0] = allowedHosts;
-            }
-            builder.WithOrigins(hosts)
-            .AllowAnyMethod()
-            .AllowAnyHeader()
-            .AllowCredentials();
-        });
+    options.AddPolicy(name: "SiteCorsPolicy", builder => {
+        builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyHeader();
+    });
 });
+
 
 var app = builder.Build();
 
-
 app.UseHttpsRedirection();
+app.UseCors("SiteCorsPolicy");
 app.UseAuthorization();
 app.MapControllers();
 
