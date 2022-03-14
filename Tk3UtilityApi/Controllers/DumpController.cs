@@ -14,6 +14,8 @@ public class DumpController : BaseController
 
     private async Task<object> GetRequestAsync() => new
     {
+        RemoteIpAddress = Request.HttpContext.Connection.RemoteIpAddress?.ToString(),
+        LocalIpAddress = Request.HttpContext.Connection.LocalIpAddress?.ToString(),
         Method = Request.Method,
         ContentType = Request.ContentType,
         Url = $"{Request.Scheme}://{Request.Host}{Request.Path}{Request.QueryString}",
