@@ -19,7 +19,7 @@ public class ZoomSubtitlesController : BaseController
 
     private string GetZoomToken()
     {
-        var ztoken = Request.Headers.FirstOrDefault(h => h.Key == "Zoom-Token").Value;
+        var ztoken = Request.Headers.FirstOrDefault(h => h.Key.ToLower() == "zoom-token").Value;
         if (string.IsNullOrWhiteSpace(ztoken)) throw new AuthenticationException();
         return ztoken;
     }
