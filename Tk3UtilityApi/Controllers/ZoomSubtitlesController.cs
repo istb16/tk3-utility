@@ -1,4 +1,4 @@
-using CommonLib;
+﻿using CommonLib;
 
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,31 +9,25 @@ using Tk3UtilityApi.Params.Zoom;
 namespace Tk3UtilityApi.Controllers;
 
 [Route("zoom/subtitles")]
-public class ZoomSubtitlesController : BaseController
+public class ZoomSubtitlesController(IHttpClientFactory httpClientFactory) : BaseController
 {
-    private readonly IHttpClientFactory HttpClientFactory;
-    public ZoomSubtitlesController(IHttpClientFactory httpClientFactory)
-    {
-        HttpClientFactory = httpClientFactory;
-    }
-
     private string GetZoomToken()
     {
-        var ztoken = Request.Headers.FirstOrDefault(h => h.Key.ToLower() == "zoom-token").Value;
+        var ztoken = Request.Headers.FirstOrDefault(h => h.Key.Equals("zoom-token", StringComparison.CurrentCultureIgnoreCase)).Value;
         if (string.IsNullOrWhiteSpace(ztoken)) throw new AuthenticationException();
-        return ztoken;
+        return ztoken!;
     }
 
     [HttpPost]
     public async Task<DateTime> Post([FromBody] RequestZoomSubtitle body)
     {
         var ztoken = GetZoomToken();
-        var client = HttpClientFactory.CreateClient();
+        var client = httpClientFactory.CreateClient();
         var url = $"{ztoken}&seq={body.Sequence}";
 
         var res = await client.PostAsync(url, new StringContent(body.Message));
         if (!res.IsSuccessStatusCode || res.StatusCode != System.Net.HttpStatusCode.OK)
-            throw new ArgumentException();
+            throw new ArgumentException(null, nameof(body));
 
         var resBody = await res.Content.ReadAsStringAsync();
         return resBody.ToDateTime();
@@ -43,7 +37,7 @@ public class ZoomSubtitlesController : BaseController
     public async Task<int> GetSequence()
     {
         var ztoken = GetZoomToken();
-        var client = HttpClientFactory.CreateClient();
+        var client = httpClientFactory.CreateClient();
         var url = ztoken.Replace("/closedcaption?", "/closedcaption/seq?");
 
         var res = await client.GetAsync(url);
