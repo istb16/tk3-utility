@@ -13,12 +13,11 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v7
       - name: Setup .NET
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v6
         with:
-          dotnet-version: '8.x'
-          include-prerelease: true
+          dotnet-version: '10.x'
       - name: AWS CLI
         run: dotnet tool install -g Amazon.Lambda.Tools
       - name: Restore dependencies
