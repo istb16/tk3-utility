@@ -12,7 +12,7 @@ builder.Services.AddHttpClient();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: "SiteCorsPolicy", builder => {
-        builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyHeader();
+        builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
     });
 });
 
