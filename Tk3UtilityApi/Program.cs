@@ -7,8 +7,6 @@ builder.Services.AddControllers();
 // package will act as the webserver translating request and responses between the Lambda event source and ASP.NET Core.
 builder.Services.AddAWSLambdaHosting(LambdaEventSource.RestApi);
 
-builder.Services.AddHttpClient();
-
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: "SiteCorsPolicy", builder => {
