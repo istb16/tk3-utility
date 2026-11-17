@@ -20,7 +20,7 @@ event source can be API Gateway REST API and HTTP API or Application Load Balanc
 * aws-lambda-tools-defaults.json - default argument settings for use with Visual Studio and command line deployment tools for AWS
 * Program.cs - entry point to the application that contains all of the top level statements initializing the ASP.NET Core application.
 The call to `AddAWSLambdaHosting` configures the application to work in Lambda when it detects Lambda is the executing environment. 
-* Controllers\CalculatorController - example Web API controller
+* Controllers\DumpController - echoes back the received request (IP address, method, URL, query, headers, cookies, body) for debugging
 
 You may also have a test project depending on the options selected.
 
